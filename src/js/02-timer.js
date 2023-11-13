@@ -36,14 +36,17 @@ const options = {
     } else {
       // Activează butonul de start dacă data selectată este în viitor:
       startButton.removeAttribute('disabled');
+
+      // Dezactivăm calendarul după ce a fost selectată o dată validă:
+      flatpickr('#datetime-picker').destroy();
     }
   },
 };
 
-// Inițializează Flatpickr pe elementul cu id-ul datetime-picker folosind opțiunile configurate:
-flatpickr('#datetime-picker', options);
+// Inițializăm Flatpickr pe elementul cu id-ul datetime-picker folosind opțiunile configurate:
+const fp = flatpickr('#datetime-picker', options);
 
-// Adaugă un ascultător de eveniment care apelează funcția startTimer când butonul de start este apăsat:
+// Adaugăm un EventListener care apelează funcția startTimer când butonul de start este apăsat:
 startButton.addEventListener('click', startTimer);
 
 // Funcție apelată atunci când butonul de start este apăsat:
@@ -53,11 +56,14 @@ function startTimer() {
     document.querySelector('#datetime-picker').value
   ).getTime();
 
-  // Inițializează intervalul de actualizare a cronometrului la fiecare secundă:
+  // Inițializăm intervalul de actualizare a cronometrului la fiecare secundă:
   const timerInterval = setInterval(updateTimer, 1000);
 
-  // Dezactivează butonul de start după ce a fost apăsat:
+  // Dezactivăm butonul de start după ce a fost apăsat:
   startButton.setAttribute('disabled', 'true');
+
+  // Dezactivăm calendarul după ce a fost pornit cronometrul:
+  fp.destroy();
 
   // Funcție apelată la fiecare secundă pentru actualizarea cronometrului:
   function updateTimer() {
@@ -79,8 +85,10 @@ function startTimer() {
   function updateInterface({ days, hours, minutes, seconds }) {
     document.querySelector('[data-days]').textContent = addLeadingZero(days);
     document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
-    document.querySelector('[data-minutes]').textContent = addLeadingZero(minutes);
-    document.querySelector('[data-seconds]').textContent = addLeadingZero(seconds);
+    document.querySelector('[data-minutes]').textContent =
+      addLeadingZero(minutes);
+    document.querySelector('[data-seconds]').textContent =
+      addLeadingZero(seconds);
   }
 
   // Funcție pentru conversia milisecundelor în obiect cu zile, ore, minute și secunde:
