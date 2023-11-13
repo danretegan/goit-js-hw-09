@@ -79,10 +79,8 @@ function startTimer() {
   function updateInterface({ days, hours, minutes, seconds }) {
     document.querySelector('[data-days]').textContent = addLeadingZero(days);
     document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
-    document.querySelector('[data-minutes]').textContent =
-      addLeadingZero(minutes);
-    document.querySelector('[data-seconds]').textContent =
-      addLeadingZero(seconds);
+    document.querySelector('[data-minutes]').textContent = addLeadingZero(minutes);
+    document.querySelector('[data-seconds]').textContent = addLeadingZero(seconds);
   }
 
   // Funcție pentru conversia milisecundelor în obiect cu zile, ore, minute și secunde:
